@@ -1,16 +1,65 @@
-# React + Vite
+# Recon Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Author: Raghav Anand · Created: 2026-11-15
 
-Currently, two official plugins are available:
+A React web dashboard for reviewing 3-way reconciliation results: ledger vs payment processor vs bank. It is the front end for the 3-Way Recon project and runs on sample data until the matching engine is built.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- Summary cards: total transactions, matched, need review
+- Status filters, opening on "Need review" so analysts land on exceptions
+- Color-coded status badges: green matched, amber amount mismatch, red missing
+- Rows with unknown or missing statuses stay reachable through an "Other / unknown" filter
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech stack
 
-## Expanding the ESLint configuration
+React, Vite, plain CSS, and a Node.js script for test data.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Run it locally
+
+    npm install
+    npm run dev
+
+Then open http://localhost:5173 in a browser.
+
+## Data contract
+
+Each row the recon engine returns should have these fields:
+
+| Field | Meaning |
+| --- | --- |
+| id | Ledger transaction ID |
+| date | Transaction date (YYYY-MM-DD) |
+| member | Customer ID |
+| type | Disbursement (money out) or Repayment (money in) |
+| ledgerAmount | Amount in our books |
+| processorAmount | Amount reported by the processor; null if missing |
+| bankAmount | Amount in the bank settlement file; null if missing |
+| status | MATCHED, AMOUNT_MISMATCH, MISSING_IN_BANK, or MISSING_IN_PROCESSOR |
+| reason | Plain-English explanation; empty when matched |
+
+## Test data
+
+- `src/data/reconResults.json`: 10 clean sample rows
+- `src/data/reconResultsMessy.json`: 7 rows with bad data on purpose
+- `scripts/makeBigData.js`: generates 5,000 rows (not committed). Run it with:
+
+      node scripts/makeBigData.js
+
+To switch data, change which import line is active at the top of `src/App.jsx`.
+
+## Known issues
+
+- Duplicate transaction IDs are counted twice
+- Text amounts (for example "100") are not rejected
+- The test-data script can produce negative amounts
+- The "Missing in processor" badge doesn't show that the bank is also missing
+- No fee field yet, so fee-driven mismatches can't be classified automatically
+
+## Roadmap (v2)
+
+1. Pagination and a row count
+2. Search by transaction ID
+3. Export to CSV
+4. Column sorting and a date-range filter
+5. Drill-down detail page with breadcrumbs
