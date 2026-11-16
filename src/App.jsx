@@ -1,122 +1,68 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
+/*
+ * File: src/App.jsx
+ * Author: Raghav Anand
+ * Created: 2026-11-15
+ * Purpose: Recon Dashboard, version 1. Shows reconciliation results in a table.
+ */
+
+// Import the sample results. Vite lets us import a .json file directly;
+// it arrives as a normal JavaScript array of objects.
+import reconResults from './data/reconResults.json'
+
+// Import this component's styles.
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+// Helper: turn a number like 198.5 into "$198.50".
+// If the value is missing (null or undefined), show a dash instead.
+function formatMoney(value) {
+  if (value === null || value === undefined) {
+    return '—'
+  }
+  return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' })
 }
 
+// App is a React component: a function that returns what to draw on screen.
+// The HTML-looking code inside return(...) is JSX; Vite turns it into JavaScript.
+function App() {
+  return (
+    <main className="page">
+      <h1>Recon Dashboard</h1>
+      <p className="subtitle">Ledger vs processor vs bank (sample data)</p>
+
+      <table className="recon-table">
+        <thead>
+          <tr>
+            <th>Transaction</th>
+            <th>Date</th>
+            <th>Member</th>
+            <th>Type</th>
+            <th className="money">Ledger</th>
+            <th className="money">Processor</th>
+            <th className="money">Bank</th>
+            <th>Status</th>
+            <th>Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          {/* map() runs once per row and returns one <tr> for each transaction. */}
+          {/* key tells React which row is which; it must be unique. */}
+          {reconResults.map((row) => (
+            <tr key={row.id}>
+              <td>{row.id}</td>
+              <td>{row.date}</td>
+              <td>{row.member}</td>
+              <td>{row.type}</td>
+              <td className="money">{formatMoney(row.ledgerAmount)}</td>
+              <td className="money">{formatMoney(row.processorAmount)}</td>
+              <td className="money">{formatMoney(row.bankAmount)}</td>
+              <td>{row.status}</td>
+              <td>{row.reason}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </main>
+  )
+}
+// Export App so main.jsx (Vite's entry file) can put it on the page.
 export default App

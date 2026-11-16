@@ -1,0 +1,12 @@
+[
+  { "id": "TXN-1001", "date": "2026-11-02", "member": "M-20481", "type": "Disbursement", "ledgerAmount": 100, "processorAmount": 100, "bankAmount": 100, "status": "MATCHED", "reason": "" },
+  { "id": "TXN-1002", "date": "2026-11-02", "member": "M-20517", "type": "Disbursement", "ledgerAmount": 250, "processorAmount": 250, "bankAmount": 250, "status": "MATCHED", "reason": "" },
+  { "id": "TXN-1003", "date": "2026-11-02", "member": "M-20533", "type": "Repayment", "ledgerAmount": 75.5, "processorAmount": 75.5, "bankAmount": 75.5, "status": "MATCHED", "reason": "" },
+  { "id": "TXN-1004", "date": "2026-11-03", "member": "M-20602", "type": "Disbursement", "ledgerAmount": 200, "processorAmount": 200, "bankAmount": 198.5, "status": "AMOUNT_MISMATCH", "reason": "Bank amount is $1.50 lower (possible fee deducted)" },
+  { "id": "TXN-1005", "date": "2026-11-03", "member": "M-20611", "type": "Repayment", "ledgerAmount": 50, "processorAmount": 50, "bankAmount": null, "status": "MISSING_IN_BANK", "reason": "Not found in bank settlement file" },
+  { "id": "TXN-1006", "date": "2026-11-03", "member": "M-20644", "type": "Disbursement", "ledgerAmount": 150, "processorAmount": 150, "bankAmount": 150, "status": "MATCHED", "reason": "" },
+  { "id": "TXN-1007", "date": "2026-11-04", "member": "M-20677", "type": "Repayment", "ledgerAmount": 125, "processorAmount": 120, "bankAmount": 125, "status": "AMOUNT_MISMATCH", "reason": "Processor amount differs from ledger by $5.00" },
+  { "id": "TXN-1008", "date": "2026-11-04", "member": "M-20690", "type": "Disbursement", "ledgerAmount": 300, "processorAmount": null, "bankAmount": null, "status": "MISSING_IN_PROCESSOR", "reason": "Ledger entry with no processor record" },
+  { "id": "TXN-1009", "date": "2026-11-04", "member": "M-20702", "type": "Repayment", "ledgerAmount": 60, "processorAmount": 60, "bankAmount": 60, "status": "MATCHED", "reason": "" },
+  { "id": "TXN-1010", "date": "2026-11-05", "member": "M-20715", "type": "Disbursement", "ledgerAmount": 400, "processorAmount": 400, "bankAmount": null, "status": "MISSING_IN_BANK", "reason": "Processor shows paid; bank settlement pending" }
+]
