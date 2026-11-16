@@ -1,0 +1,9 @@
+[
+  { "id": "TXN-1001", "date": "2026-11-02", "member": "M-20481", "type": "Disbursement", "ledgerAmount": 100, "processorAmount": 100, "bankAmount": 100, "status": "MATCHED", "reason": "" },
+  { "id": "TXN-1001", "date": "2026-11-02", "member": "M-20481", "type": "Disbursement", "ledgerAmount": 100, "processorAmount": 100, "bankAmount": 100, "status": "MATCHED", "reason": "Duplicate ID on purpose" },
+  { "id": "TXN-2001", "date": "2026-11-06", "member": "M-30001", "type": "Repayment", "ledgerAmount": 80, "processorAmount": 40, "bankAmount": 40, "status": "PARTIAL_MATCH", "reason": "Status the dashboard doesn't know" },
+  { "id": "TXN-2002", "date": "2026-11-06", "member": "M-30002", "type": "Repayment", "ledgerAmount": 90, "processorAmount": 90, "bankAmount": 90, "reason": "No status field at all" },
+  { "id": "TXN-2003", "date": "2026-11-06", "member": "M-30003", "type": "Disbursement", "ledgerAmount": "100", "processorAmount": 100, "bankAmount": 100, "status": "MATCHED", "reason": "Ledger amount is text, not a number" },
+  { "id": "TXN-2004", "date": "2026-11-06", "member": "M-30004", "type": "Disbursement", "ledgerAmount": 500, "processorAmount": 500, "bankAmount": 495, "status": "AMOUNT_MISMATCH", "reason": "Bank amount is $5.00 lower. The processor batch was split across two settlement files, one arrived after the cutoff, and the second file used a different reference format, so the matcher could only pair part of the amount and flagged the rest for manual review by FinOps." },
+  { "id": "TXN-2005", "date": "2026-11-06", "member": "M-30005", "type": "Repayment", "ledgerAmount": null, "processorAmount": null, "bankAmount": null, "status": "MISSING_IN_BANK", "reason": "Every amount is missing" }
+]
